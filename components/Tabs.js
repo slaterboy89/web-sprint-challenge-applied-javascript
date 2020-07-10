@@ -15,7 +15,7 @@ const topics = document.querySelector('.topics')
 
 axios.get(' https://lambda-times-backend.herokuapp.com/topics')
     .then((response) => {
-        console.log('Its Working')
+        console.log(response)
         topics.appendChild(tabMaker(response))
     })
     .catch(err => {
@@ -36,4 +36,4 @@ axios.get(' https://lambda-times-backend.herokuapp.com/topics')
         
     }
 
-    
+    console.log(tabMaker())

@@ -4,16 +4,17 @@
 import axios from 'axios'
 const topics = document.querySelector('.topics')
 
-
-axios.get('https://lambda-times-backend.herokuapp.com/articles')
-    .then((response) => {
-        console.log('Its Working')
-        topics.appendChild(tabMaker(response))
-    })
-    .catch(err => {
-        console.log('error')
-    
-    })
+axios
+  .get("https://lambda-times-backend.herokuapp.com/articles")
+  .then((res) => {
+    const articles = res.data.articles;
+    for (let obj in articles) {
+      articles[obj].forEach((item) => {
+    cardMaker(item);
+      });
+    }
+  })
+  .catch((err) => console.log(err));
 // Study the response data you get back, closely.
 // You will be creating a card for each article in the response.
 // This won't be as easy as just iterating over an array though.
@@ -43,9 +44,9 @@ function cardMaker(userData){
     author.classList.add('author')
     myImage.classList.add('img-container')
 
-    myImageSrc.src = userData.data.authorPhoto
-    headline.textContent = userData.data.headline
-    authorName.textContent = `By ${userData.data.authorName}`
+    myImageSrc.src = `${userData.authorPhoto}`
+    headline.textContent = userData.headline
+    authorName.textContent = `By ${userData.authorName}`
 
     cards.appendChild(card)
     card.appendChild(headline)
@@ -57,20 +58,11 @@ function cardMaker(userData){
     cards.addEventListener('click', (event) => {
         console.log(userData.headline)
     })
-
+    console.log(authorName)
+   
 }
+
 //
 // Add a listener for click events so that when a user clicks on a card, the headline of the article is logged to the console.
 //
 // Use your function to create a card for each of the articles, and append each card to the DOM.
-const articlesInfo = 
-.forEach(user => {
-    axios.get('https://lambda-times-backend.herokuapp.com/articles')
-    .then( (response) => {
-      cards.appendChild(cardMaker(response))
-    })
-    .catch( (error) => {
-      console.log('error')
-    })
-  })
-  console.log(articlesInfo)
