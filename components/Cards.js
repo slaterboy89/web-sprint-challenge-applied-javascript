@@ -1,6 +1,19 @@
 // STEP 3: Create article cards.
 // -----------------------
 // Send an HTTP GET request to the following address: https://lambda-times-backend.herokuapp.com/articles
+import axios from 'axios'
+const topics = document.querySelector('.topics')
+
+
+axios.get('https://lambda-times-backend.herokuapp.com/articles')
+    .then((response) => {
+        console.log('Its Working')
+        topics.appendChild(tabMaker(response))
+    })
+    .catch(err => {
+        console.log('error')
+    
+    })
 // Study the response data you get back, closely.
 // You will be creating a card for each article in the response.
 // This won't be as easy as just iterating over an array though.
@@ -16,7 +29,48 @@
 //     <span>By {author's name}</span>
 //   </div>
 // </div>
+const cards = document.querySelector('.cards-container')
+function cardMaker(userData){
+    const card = document.createElement('div')
+    const headline = document.createElement('div')
+    const author = document.createElement('div')
+    const myImage = document.createElement('div')
+    const myImageSrc = document.createElement('img')
+    const authorName = document.createElement('span')
+
+    card.classList.add('card')
+    headline.classList.add('headline')
+    author.classList.add('author')
+    myImage.classList.add('img-container')
+
+    myImageSrc.src = userData.data.authorPhoto
+    headline.textContent = userData.data.headline
+    authorName.textContent = `By ${userData.data.authorName}`
+
+    cards.appendChild(card)
+    card.appendChild(headline)
+    card.appendChild(author)
+    author.appendChild(myImage)
+    myImage.appendChild(myImageSrc)
+    author.appendChild(authorName)
+    
+    cards.addEventListener('click', (event) => {
+        console.log(userData.headline)
+    })
+
+}
 //
 // Add a listener for click events so that when a user clicks on a card, the headline of the article is logged to the console.
 //
 // Use your function to create a card for each of the articles, and append each card to the DOM.
+const articlesInfo = 
+.forEach(user => {
+    axios.get('https://lambda-times-backend.herokuapp.com/articles')
+    .then( (response) => {
+      cards.appendChild(cardMaker(response))
+    })
+    .catch( (error) => {
+      console.log('error')
+    })
+  })
+  console.log(articlesInfo)
